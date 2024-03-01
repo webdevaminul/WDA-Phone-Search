@@ -14,9 +14,28 @@
   </head>
   <body>
     <header>
-      <h1 class="text-6xl">Phone Hunting</h1>
+      <h1 class="text-6xl py-3">Phone Hunting</h1>
     </header>
-    <main></main>
+    <main>
+      <section>
+        <input
+          id="input-field"
+          type="text"
+          placeholder="Search here"
+          class="input input-bordered w-full max-w-md my-4"
+        />
+        <button onclick="searchHandler()" class="btn btn-outline btn-primary">
+          Search
+        </button>
+      </section>
+
+      <section>
+        <div
+          id="phone-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
+        ></div>
+      </section>
+    </main>
     <footer></footer>
 
     <script src="javaScripts/phone.js"></script>
