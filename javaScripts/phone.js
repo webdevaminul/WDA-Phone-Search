@@ -1,57 +1,91 @@
-const loadPhone = async (inputSearchText) => {
-  const res = await fetch(
-    `https://openapi.programming-hero.com/api/phones?search=${inputSearchText}`
-  );
-  const data = await res.json();
-  const phones = data.data;
-  displayPhone(phones);
+let currentPage = 1;
+const itemsPerPage = 6;
+let allPhones = [];
+
+const loadPhone = async (inputSearchText = "samsung") => {
+  try {
+    document.getElementById(
+      "phone-container"
+    ).innerHTML = `<p class="text-center text-xl font-semibold text-gray-600">Loading...</p>`;
+
+    const res = await fetch(
+      `https://openapi.programming-hero.com/api/phones?search=${inputSearchText}`
+    );
+    const data = await res.json();
+    allPhones = data.data;
+
+    currentPage = 1;
+    displayPhone();
+  } catch (error) {
+    console.error("Error fetching phones:", error);
+    document.getElementById("phone-container").innerHTML =
+      "<p class='text-red-500 text-center'>Failed to load phones. Please try again.</p>";
+  }
 };
 
-const displayPhone = (phones) => {
-  //   console.log(phones); shob gula phone dekhano
-
-  //01. where to append
+const displayPhone = () => {
   const phoneContainer = document.getElementById("phone-container");
-
-  //clear page before search phone
   phoneContainer.textContent = "";
 
-  phones.forEach((phone) => {
-    /*prottek array phone element k kisu korte forEach use kora hoise.*/
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedPhones = allPhones.slice(startIndex, startIndex + itemsPerPage);
 
-    console.log(phone.image);
-    //02. create a div
+  if (paginatedPhones.length === 0) {
+    phoneContainer.innerHTML = `<p class="text-center text-red-500 text-lg">No phones found. Try another search.</p>`;
+    return;
+  }
+
+  paginatedPhones.forEach((phone) => {
     const phoneCard = document.createElement("div");
-
-    //03. set innerHTML or innerText
-    phoneCard.classList = `card bg-base-100 shadow-xl`;
+    phoneCard.classList = `card bg-white rounded-lg p-4 hover:shadow-xl transition duration-300`;
     phoneCard.innerHTML = `
-    <figure>
-        <img
-        src="${phone.image}"
-        alt="Shoes"
-        />
-    </figure>
-    <div class="card-body">
-        <h2 class="card-title">${phone.phone_name}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
-        </div>
-    </div>
+      <figure class="flex justify-center h-48">
+          <img src="${phone.image}" alt="${phone.phone_name}" class="h-full object-cover rounded-md"/>
+      </figure>
+      <div class="card-body text-center p-4">
+          <h2 class="card-title text-lg font-bold">${phone.phone_name}</h2>
+          <p class="text-gray-500 text-sm">A high-performance phone with cutting-edge technology.</p>
+          <div class="card-actions justify-center mt-3">
+              <button class="btn btn-ghost px-4 py-2 rounded-full">View Details</button>
+          </div>
+      </div>
     `;
-    // 04. append child
     phoneContainer.appendChild(phoneCard);
   });
+
+  updatePaginationButtons();
 };
 
-// loadPhone();
-
-//Search Button Handler
 const searchHandler = () => {
-  // 01. get data from input field
   const inputField = document.getElementById("input-field");
-  const inputSearchText = inputField.value;
-  console.log(inputSearchText);
-  loadPhone(inputSearchText);
+  const inputSearchText = inputField.value.trim();
+
+  if (inputSearchText === "") {
+    alert("Please enter a search term!");
+    loadPhone();
+  } else {
+    loadPhone(inputSearchText);
+  }
 };
+
+const nextPage = () => {
+  if (currentPage * itemsPerPage < allPhones.length) {
+    currentPage++;
+    displayPhone();
+  }
+};
+
+const prevPage = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    displayPhone();
+  }
+};
+
+const updatePaginationButtons = () => {
+  document.getElementById("prev-btn").disabled = currentPage === 1;
+  document.getElementById("next-btn").disabled = currentPage * itemsPerPage >= allPhones.length;
+};
+
+// Load default phones
+loadPhone();

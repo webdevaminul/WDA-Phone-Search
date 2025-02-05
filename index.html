@@ -3,41 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phone Hunter</title>
-    <!-- daisyUI -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css"
-      rel="stylesheet"
-      type="text/css"
+    <meta
+      name="description"
+      content="A phone searching landing page built using HTML and tailwindcss."
     />
+    <meta name="keywords" content="phone, search, landing page" />
+    <meta name="author" content="webdevaminul" />
+    <title>WDA Phone Search</title>
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon" />
+    <!-- daisyUI & Tailwind -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <header>
-      <h1 class="text-6xl py-3">Phone Hunting</h1>
+  <body class="bg-gray-100 text-gray-900">
+    <header class="bg-white p-5 text-center">
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-indigo-600">WDA Phone Search</h1>
     </header>
-    <main>
-      <section>
-        <input
-          id="input-field"
-          type="text"
-          placeholder="Search here"
-          class="input input-bordered w-full max-w-md my-4"
-        />
-        <button onclick="searchHandler()" class="btn btn-outline btn-primary">
-          Search
-        </button>
+
+    <main class="max-w-6xl mx-auto p-5">
+      <!-- Search Section -->
+      <section class="text-center my-6">
+        <div class="flex justify-center items-center gap-2">
+          <input
+            id="input-field"
+            type="text"
+            placeholder="Search for a phone..."
+            class="input input-bordered w-full max-w-md rounded-full px-4 py-2"
+          />
+          <button onclick="searchHandler()" class="btn btn-primary px-6 rounded-full">
+            Search
+          </button>
+        </div>
       </section>
 
+      <!-- Phones Display -->
       <section>
         <div
           id="phone-container"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         ></div>
       </section>
-    </main>
-    <footer></footer>
 
-    <script src="javaScripts/phone.js"></script>
+      <!-- Pagination Controls -->
+      <section class="text-center my-8">
+        <button
+          id="prev-btn"
+          class="btn btn-outline btn-primary mx-2 px-5 py-2 rounded-lg"
+          onclick="prevPage()"
+        >
+          Previous
+        </button>
+        <button
+          id="next-btn"
+          class="btn btn-outline btn-primary mx-2 px-5 py-2 rounded-lg"
+          onclick="nextPage()"
+        >
+          Next
+        </button>
+      </section>
+    </main>
+
+    <footer class="bg-white text-center py-4 mt-10">
+      <p class="text-gray-600">&copy; 2025 Phone Hunter | Built with ❤️ by WDA</p>
+    </footer>
+
+    <script src="javascripts/phone.js"></script>
   </body>
 </html>
