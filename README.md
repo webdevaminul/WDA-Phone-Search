@@ -29,13 +29,13 @@ To run this project locally, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/webdevaminul/WDA-Landing-Travel.git
+   git clone https://github.com/webdevaminul/WDA-Phone-Search.git
    ```
 
 2. **Navigate to the Project Directory**:
 
    ```bash
-   cd WDA-Landing-Travel
+   cd WDA-Phone-Search
    ```
 
 3. **Open the project with Visual Studio Code (recommended)**:
